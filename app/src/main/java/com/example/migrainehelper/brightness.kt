@@ -6,7 +6,7 @@ import android.provider.Settings
 
 class brightness {
 
-    public fun brightnessFn(ts: Context, v: Int){
+    fun brightnessFn(ts: Context, v: Int){
         if (Settings.System.canWrite(ts)) {
             println("Checked")
             Settings.System.putInt(
@@ -25,7 +25,7 @@ class brightness {
         }
     }
 
-    public fun getCurrentBrightness(context: Context): Int{
+    fun getCurrentBrightness(context: Context): Int{
         val contentResolver: ContentResolver = context.contentResolver
 
         Settings.System.putInt(
@@ -41,4 +41,7 @@ class brightness {
 
         return br;
     }
+
 }
+
+
