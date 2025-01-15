@@ -1,10 +1,8 @@
-package com.example.migrainehelper
-
 import android.content.ContentResolver
 import android.content.Context
 import android.provider.Settings
 
-class brightness {
+class Brightness {
 
     fun brightnessFn(ts: Context, v: Int){
         if (Settings.System.canWrite(ts)) {

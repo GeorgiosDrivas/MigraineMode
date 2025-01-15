@@ -1,5 +1,7 @@
 package com.example.migrainehelper
 
+import VibrateMode
+import Brightness
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +10,6 @@ import android.provider.Settings
 import android.widget.Switch
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-
 
 class MainActivity : AppCompatActivity() {
     private var originalBrightness: Int? = null
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val sw1: Switch? = findViewById(R.id.switch1)
-        val brightnessCls = brightness()
+        val brightnessCls = Brightness()
+        val silentMode = VibrateMode(this)
 
         sw1?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                     originalBrightness = brightnessCls.getCurrentBrightness(this)
                 }
                 brightnessCls.brightnessFn(this, 10)
+                silentMode.enableVibrateMode()
             } else {
                 originalBrightness?.let { brightnessCls.brightnessFn(this, it) }
             }
