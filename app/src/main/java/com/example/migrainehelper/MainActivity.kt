@@ -1,9 +1,10 @@
 package com.example.migrainehelper
 
-import VibrateMode
+import AudioMode
 import Brightness
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val sw1: Switch? = findViewById(R.id.switch1)
         val brightnessCls = Brightness()
-        val silentMode = VibrateMode(this)
+        val silentMode = AudioMode(this)
 
         sw1?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -30,9 +31,11 @@ class MainActivity : AppCompatActivity() {
                     originalBrightness = brightnessCls.getCurrentBrightness(this)
                 }
                 brightnessCls.brightnessFn(this, 10)
-                silentMode.enableVibrateMode()
+                silentMode.audioMode(AudioManager.RINGER_MODE_VIBRATE)
             } else {
                 originalBrightness?.let { brightnessCls.brightnessFn(this, it) }
+                silentMode.audioMode(AudioManager.RINGER_MODE_NORMAL)
+
             }
         }
     }
