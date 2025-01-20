@@ -21,11 +21,21 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
+        startActivity(intent)
+
         val sw1: Switch? = findViewById(R.id.switch1)
         val brightnessCls = Brightness()
         val silentMode = AudioMode(this)
 
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+
         sw1?.setOnCheckedChangeListener { _, isChecked ->
+            with(sharedPreferences.edit()) {
+                putBoolean("isFilteringEnabled", isChecked)
+                apply()
+            }
+
             if (isChecked) {
                 if (originalBrightness == null) {
                     originalBrightness = brightnessCls.getCurrentBrightness(this)
@@ -35,9 +45,9 @@ class MainActivity : AppCompatActivity() {
             } else {
                 originalBrightness?.let { brightnessCls.brightnessFn(this, it) }
                 silentMode.audioMode(AudioManager.RINGER_MODE_NORMAL)
-
             }
         }
+
     }
 
     override fun onResume() {
