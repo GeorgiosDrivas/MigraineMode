@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
+        val isFilteringEnabled = sharedPreferences.getBoolean("isFilteringEnabled", false)
+        sw1?.isChecked = isFilteringEnabled
+
         sw1?.setOnCheckedChangeListener { _, isChecked ->
             with(sharedPreferences.edit()) {
                 putBoolean("isFilteringEnabled", isChecked)
