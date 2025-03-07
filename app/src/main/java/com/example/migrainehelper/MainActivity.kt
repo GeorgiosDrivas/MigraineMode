@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Switch
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
@@ -24,9 +25,14 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
         startActivity(intent)
 
+        val textView: TextView = findViewById(R.id.daysValue)
         val sw1: Switch? = findViewById(R.id.switch1)
         val brightnessCls = Brightness()
+        val daysCounter = DaysCounter()
         val silentMode = AudioMode(this)
+
+        val updatedCounter = daysCounter.updateDailyCounter(this)
+        textView.text = updatedCounter.toString()
 
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
