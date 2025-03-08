@@ -8,6 +8,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -25,19 +26,24 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
         startActivity(intent)
 
-        val textView: TextView = findViewById(R.id.daysValue)
+        val daysValue: TextView = findViewById(R.id.daysValue)
+        val resetBtn: Button = findViewById(R.id.resetBtn)
         val sw1: Switch? = findViewById(R.id.switch1)
         val brightnessCls = Brightness()
         val daysCounter = DaysCounter()
         val silentMode = AudioMode(this)
 
         val updatedCounter = daysCounter.updateDailyCounter(this)
-        textView.text = updatedCounter.toString()
+        daysValue.text = updatedCounter.toString()
 
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
         val isFilteringEnabled = sharedPreferences.getBoolean("isFilteringEnabled", false)
         sw1?.isChecked = isFilteringEnabled
+
+        resetBtn.setOnClickListener{
+            daysValue.text = "0";
+        }
 
         sw1?.setOnCheckedChangeListener { _, isChecked ->
             with(sharedPreferences.edit()) {
