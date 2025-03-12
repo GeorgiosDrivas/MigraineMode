@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         val daysValue: TextView = findViewById(R.id.daysValue)
         val resetBtn: Button = findViewById(R.id.resetBtn)
         val sw1: Switch? = findViewById(R.id.switch1)
+        val streakField: TextView = findViewById(R.id.streak)
         val brightnessCls = Brightness()
         val daysCounter = DaysCounter()
         val silentMode = AudioMode(this)
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         sw1?.isChecked = isFilteringEnabled
 
         resetBtn.setOnClickListener{
+            val currentStreak = daysValue.text;
+            streakField.append(" $currentStreak");
             daysValue.text = "0";
         }
 
